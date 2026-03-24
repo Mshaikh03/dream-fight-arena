@@ -1,187 +1,200 @@
 import { Link } from "react-router-dom";
-import { Play, ChevronRight, Swords, Trophy, Users, Zap } from "lucide-react";
-import { motion } from "framer-motion";
-import { fights, getFeaturedFight, WEIGHT_CLASSES } from "@/data/fights";
-import FightCard from "@/components/FightCard";
-import SectionHeading from "@/components/SectionHeading";
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const featured = getFeaturedFight();
-const trending = fights.slice(0, 4);
-const requested = fights.filter((f) => f.tags.includes("Fan Request")).slice(0, 3);
+const videos = [
+  {
+    id: 1,
+    title: "Jon Jones vs Francis Ngannou",
+    videoSrc: "/videos/fight1.mp4",
+    prediction:
+      "Jon Jones wins by decision, using his wrestling advantage to avoid extended striking exchanges and control the fight. Francis will attempt to knock him out with his insane power punch.",
+  },
+  {
+    id: 2,
+    title: "Khabib Nurmagomedov vs Tony Ferguson",
+    videoSrc: "/videos/fight2.mp4",
+    prediction:
+      "Khabib wins in Round 2 with a submission (obviously), using takedowns and top pressure to neutralize Ferguson. Ferguson may land some kicks that knock Khabib down.",
+  },
+  {
+    id: 3,
+    title: "Amanda Nunes vs Cris Cyborg",
+    videoSrc: "/videos/fight3.mp4",
+    prediction:
+      "Amanda Nunes wins in Round 3, using her striking, distance control, and late-round finishing ability. Cris will leverage her BJJ and Judo background to exhaust Amanda in an attempt to secure a later-round victory.",
+  },
+];
 
-const weightClassIcons: Record<string, string> = {
-  Heavyweight: "💪",
-  "Light Heavyweight": "🥊",
-  Middleweight: "⚡",
-  Welterweight: "🔥",
-  Lightweight: "💨",
-  Featherweight: "🪶",
-  Bantamweight: "🎯",
-  "Women's Strawweight": "👊",
-  "Women's Flyweight": "✨",
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5 },
-  }),
-};
+const upcomingFights = [
+  {
+    id: 1,
+    title: "Georges St-Pierre vs Anderson Silva",
+  },
+  {
+    id: 2,
+    title: "Fedor Emelianenko vs Brock Lesnar",
+  },
+  {
+    id: 3,
+    title: "Brock Lesnar vs Daniel Cormier",
+  },
+];
 
 export default function Index() {
+  const [startIndex, setStartIndex] = useState(0);
+
+  const visibleVideos = videos.slice(startIndex, startIndex + 2);
+
+  const handleNext = () => {
+    if (startIndex < videos.length - 2) {
+      setStartIndex(startIndex + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (startIndex > 0) {
+      setStartIndex(startIndex - 1);
+    }
+  };
+
   return (
-    <main>
-      {/* HERO */}
-      <section className="relative min-h-[90vh] flex items-end">
-        <img
-          src={featured.thumbnail}
-          alt={featured.title}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="hero-overlay absolute inset-0" />
-        <div className="relative container mx-auto px-4 pb-16 pt-32 z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl"
-          >
-            <span className="inline-block px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold uppercase tracking-widest mb-4 border border-primary/30">
-              🔥 Fight of the Week
-            </span>
-            <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-foreground uppercase leading-[0.95] mb-4">
-              Watch the fights the real world can't make happen.
+    <main className="relative min-h-screen overflow-hidden bg-black text-white pt-24">
+      {/* Global subtle gradient */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,_#000000_0%,_#120000_18%,_#1a0000_35%,_#111111_70%,_#000000_100%)]" />
+
+      {/* Hero spotlight */}
+      <div className="pointer-events-none absolute top-24 left-1/2 h-[420px] w-[900px] -translate-x-1/2 rounded-full bg-red-900/15 blur-3xl" />
+
+      {/* Fight section spotlight */}
+      <div className="pointer-events-none absolute top-[520px] left-1/2 h-[500px] w-[1100px] -translate-x-1/2 rounded-full bg-red-950/10 blur-3xl" />
+
+      {/* Dark readability overlay */}
+      <div className="absolute inset-0 bg-black/35" />
+
+      <div className="relative z-10">
+        {/* HERO */}
+        <section className="max-w-6xl mx-auto px-4 py-16">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-bold uppercase tracking-[0.06em] leading-none">
+              UFC Fight Simulator Hub
             </h1>
-            <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-xl leading-relaxed">
-              Explore cinematic UFC simulations, dream matchups, rivalries, and fan-requested
-              battles — all in one polished multimedia hub.
+
+            <p className="mt-6 text-gray-300 text-lg md:text-xl leading-relaxed max-w-4xl mx-auto">
+              Watch simulated UFC dream matchups and custom fight
+              simulations. Each fight includes analysis, commentary, and
+              predictions.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                to={`/fight/${featured.id}`}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-display font-bold uppercase tracking-wider rounded-lg hover:bg-primary/90 transition-colors red-glow"
-              >
-                <Play className="h-4 w-4" /> Watch Now
-              </Link>
+
+            <div className="mt-10">
               <Link
                 to="/request"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-foreground font-display font-bold uppercase tracking-wider rounded-lg border border-border hover:bg-accent/80 transition-colors"
+                className="inline-block rounded-xl bg-red-600 px-8 py-4 text-lg font-medium uppercase tracking-wide transition-colors hover:bg-red-700"
               >
                 Request a Fight
               </Link>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* FEATURED VIDEO */}
-      <section className="container mx-auto px-4 -mt-20 relative z-20">
-        <Link to={`/fight/${featured.id}`} className="block group">
-          <div className="glass-card rounded-xl overflow-hidden hover-lift">
-            <div className="aspect-video relative">
-              <img src={featured.thumbnail} alt={featured.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-card/40 flex items-center justify-center group-hover:bg-card/20 transition-colors">
-                <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center red-glow animate-pulse-glow">
-                  <Play className="h-8 w-8 text-primary-foreground ml-1" />
-                </div>
-              </div>
-            </div>
-            <div className="p-6">
-              <h2 className="font-display text-2xl font-bold text-foreground">{featured.title}</h2>
-              <p className="text-muted-foreground mt-1">{featured.summary}</p>
+        {/* VIDEOS */}
+        <section className="max-w-7xl mx-auto px-4 pb-20">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wide">
+              Featured Fight Simulations
+            </h2>
+
+            <div className="flex gap-3">
+              <button
+                onClick={handlePrev}
+                disabled={startIndex === 0}
+                className="rounded-full border border-white/10 bg-white/5 p-3 text-white transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+                aria-label="Previous fights"
+              >
+                <ChevronLeft size={22} />
+              </button>
+
+              <button
+                onClick={handleNext}
+                disabled={startIndex >= videos.length - 2}
+                className="rounded-full border border-white/10 bg-white/5 p-3 text-white transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+                aria-label="Next fights"
+              >
+                <ChevronRight size={22} />
+              </button>
             </div>
           </div>
-        </Link>
-      </section>
 
-      {/* TRENDING */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="flex items-center justify-between mb-8">
-          <SectionHeading title="Trending Simulations" subtitle="The most watched fights this week" className="mb-0" />
-          <Link to="/browse" className="hidden md:flex items-center gap-1 text-primary text-sm font-semibold hover:underline">
-            View All <ChevronRight className="h-4 w-4" />
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {trending.map((fight, i) => (
-            <motion.div key={fight.id} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <FightCard fight={fight} size="sm" />
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      <div className="section-divider" />
-
-      {/* WEIGHT CLASSES */}
-      <section className="container mx-auto px-4 py-20">
-        <SectionHeading title="Browse by Weight Class" subtitle="Find simulations in your favorite division" />
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {WEIGHT_CLASSES.map((wc, i) => (
-            <motion.div key={wc} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <Link
-                to={`/browse?category=${encodeURIComponent(wc)}`}
-                className="glass-card p-5 text-center hover-lift block group"
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            {visibleVideos.map((video) => (
+              <div
+                key={video.id}
+                className="overflow-hidden rounded-2xl border border-white/10 bg-black/55 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur-sm"
               >
-                <span className="text-2xl mb-2 block">{weightClassIcons[wc] || "🥋"}</span>
-                <span className="font-display text-sm uppercase tracking-wider text-foreground group-hover:text-primary transition-colors">
-                  {wc}
-                </span>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+                <video
+                  controls
+                  preload="metadata"
+                  playsInline
+                  className="w-full aspect-video bg-black"
+                >
+                  <source src={video.videoSrc} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
 
-      <div className="section-divider" />
+                <div className="p-5">
+                  <h3 className="text-xl font-bold uppercase tracking-wide">
+                    {video.title}
+                  </h3>
 
-      {/* MOST WANTED */}
-      <section className="container mx-auto px-4 py-20">
-        <SectionHeading title="Most Wanted Matchups" subtitle="Fan-requested battles brought to life" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {requested.map((fight, i) => (
-            <motion.div key={fight.id} custom={i} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-              <FightCard fight={fight} />
-            </motion.div>
-          ))}
-        </div>
-        <div className="text-center mt-8">
-          <Link
-            to="/request"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-display font-bold uppercase tracking-wider rounded-lg hover:bg-primary/90 transition-colors"
-          >
-            <Swords className="h-4 w-4" /> Submit Your Dream Matchup
-          </Link>
-        </div>
-      </section>
+                  <h4 className="mt-4 text-sm font-semibold uppercase tracking-wide text-red-500">
+                    Ali&apos;s Prediction
+                  </h4>
 
-      <div className="section-divider" />
-
-      {/* WHAT IS THIS */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="glass-card p-8 md:p-12 rounded-xl max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground uppercase mb-6">
-            Why Fans Choose the Sim Hub
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Trophy, title: "Dream Fights", desc: "Watch matchups the real UFC can't or won't make happen." },
-              { icon: Zap, title: "Cinematic Quality", desc: "Professional editing, commentary, and graphics on every simulation." },
-              { icon: Users, title: "Fan-Driven", desc: "Submit your dream matchup and see it brought to life." },
-            ].map((item) => (
-              <div key={item.title} className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-                  <item.icon className="h-5 w-5 text-primary" />
+                  <p className="mt-2 text-sm leading-relaxed text-gray-300 md:text-base">
+                    {video.prediction}
+                  </p>
                 </div>
-                <h3 className="font-display text-sm uppercase tracking-wider text-foreground mb-2">{item.title}</h3>
-                <p className="text-muted-foreground text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* UPCOMING FIGHTS */}
+        <section className="max-w-7xl mx-auto px-4 pb-20">
+          <div className="mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wide">
+              Upcoming Fights
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+            {upcomingFights.map((fight) => (
+              <div
+                key={fight.id}
+                className="overflow-hidden rounded-2xl border border-white/10 bg-black/55 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur-sm"
+              >
+                <div className="relative w-full aspect-video bg-[linear-gradient(to_bottom,_#120000_0%,_#2a0000_35%,_#1a1a1a_100%)] flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/30" />
+                  <div className="relative z-10 text-center px-6">
+                    <p className="text-red-500 text-sm md:text-base font-semibold uppercase tracking-[0.12em]">
+                      Simulation in progress
+                    </p>
+                    <p className="mt-3 text-white text-lg md:text-xl font-bold uppercase tracking-wide">
+                      Coming soon
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-5">
+                  <h3 className="text-xl font-bold uppercase tracking-wide">
+                    {fight.title}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

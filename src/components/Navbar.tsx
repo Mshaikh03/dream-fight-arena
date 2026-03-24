@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Flame } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const NAV_ITEMS = [
   { label: "Home", path: "/" },
-  { label: "Browse", path: "/browse" },
-  { label: "Fight Requests", path: "/request" },
-  { label: "About", path: "/about" },
+  { label: "Request a Fight", path: "/request" },
 ];
 
 export default function Navbar() {
@@ -15,23 +13,24 @@ export default function Navbar() {
   const { pathname } = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-800">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <Link to="/" className="flex items-center gap-2 group">
-          <Flame className="h-6 w-6 text-primary transition-transform group-hover:scale-110" />
-          <span className="font-display text-lg font-bold tracking-wider uppercase text-foreground">
-            UFC Fight Sim<span className="text-primary">Hub</span>
-          </span>
+        
+        {/* Logo / Title */}
+        <Link to="/" className="text-lg font-bold tracking-wide">
+          UFC Fight Simulator
         </Link>
 
-        {/* Desktop */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`text-sm font-medium uppercase tracking-wider transition-colors hover:text-primary ${
-                pathname === item.path ? "text-primary" : "text-muted-foreground"
+              className={`text-sm uppercase tracking-wider transition-colors ${
+                pathname === item.path
+                  ? "text-red-500"
+                  : "text-gray-400 hover:text-white"
               }`}
             >
               {item.label}
@@ -39,36 +38,32 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-foreground p-2"
+          className="md:hidden p-2"
           aria-label="Toggle menu"
         >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border overflow-hidden"
+            className="md:hidden border-t border-gray-800"
           >
-            <div className="flex flex-col gap-1 p-4">
+            <div className="flex flex-col p-4 gap-3">
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setOpen(false)}
-                  className={`py-3 px-4 rounded-md text-sm font-medium uppercase tracking-wider transition-colors ${
-                    pathname === item.path
-                      ? "bg-primary/10 text-primary"
-                      : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                  }`}
+                  className="text-gray-300 hover:text-white"
                 >
                   {item.label}
                 </Link>
