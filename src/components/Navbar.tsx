@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const NAV_ITEMS = [
   { label: "Home", path: "/" },
   { label: "Request a Fight", path: "/request" },
+  { label: "Search", path: "/search" },
+  { label: "About", path: "/about" },
 ];
 
 export default function Navbar() {

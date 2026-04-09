@@ -4,11 +4,10 @@ import SectionHeading from "@/components/SectionHeading";
 
 const pipeline = [
   { icon: Gamepad2, title: "Gameplay Capture", desc: "Every fight is captured in EA Sports UFC 4 with carefully set fighter attributes, AI difficulty, and match settings." },
-  { icon: Film, title: "Video Editing", desc: "Raw footage is edited into a cinematic experience with multiple angles, replays, slow-motion, and dramatic pacing." },
-  { icon: Mic, title: "Commentary & Audio", desc: "Commentary and sound design bring each fight to life, creating an immersive viewing experience." },
+  { icon: Film, title: "Video Editing", desc: "Raw footage is edited into a cinematic multi-media experience." },
+  { icon: Mic, title: "Commentary & Audio", desc: "Commentary and sound design used to bring each fight to life, creating an immersive viewing experience." },
   { icon: Palette, title: "Graphics & Design", desc: "Custom thumbnails, fighter cards, overlays, stat breakdowns, and branded visuals accompany every release." },
-  { icon: Globe, title: "Publishing", desc: "The final product is published on this platform with full metadata, fighter bios, and interactive features." },
-];
+  ];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -26,19 +25,14 @@ export default function About() {
 
         <div className="glass-card p-6 md:p-10 mb-16 space-y-5 text-foreground leading-relaxed">
           <p>
-            <strong>UFC Fight Simulator Hub</strong> is a multimedia content platform dedicated to
+            <strong>UFC Fight Simulator Hub</strong> is a multimedia platform dedicated to
             bringing dream UFC matchups to life. Using EA Sports UFC 4, we simulate the fights fans
-            have always wanted to see — from legendary GOAT debates to hypothetical cross-era clashes.
+            have always wanted to see; from legendary GOAT debates to cross-era clashes.
           </p>
           <p>
-            Every simulation is more than just gameplay footage. It's a fully produced piece of content
-            featuring cinematic editing, professional-quality graphics, immersive audio design, and
-            detailed fight analysis. The goal is to create an experience that feels like a real broadcast.
-          </p>
-          <p className="text-muted-foreground">
-            This platform is also a multimedia production showcase — combining video, audio, graphic
-            design, interactive web development, and content strategy into one cohesive project. The
-            creator handles the entire pipeline from concept to publication.
+            Every video is more than just simulation footage. It's a fully produced piece of content
+            featuring cinematic editing, quality graphics, immersive audio design, and
+            detailed fight commentary & analysis. The goal is to create an experience that feels like a real broadcast.
           </p>
         </div>
 
@@ -71,8 +65,7 @@ export default function About() {
             Dream fights. Simulated.
           </h3>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Built with passion for MMA and a commitment to quality multimedia production. Every detail
-            matters — from the first punch to the final render.
+            Built with passion for MMA and a commitment to quality multimedia production.
           </p>
         </div>
       </div>
