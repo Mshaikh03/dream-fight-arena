@@ -6,21 +6,21 @@ const videos = [
   {
     id: 1,
     title: "Jon Jones vs Francis Ngannou",
-    videoSrc: "/videos/fight1.mp4",
+    videoSrc: "https://www.youtube.com/embed/cd5j-xXXv50",
     prediction:
       "Jon Jones wins by decision, using his wrestling advantage to avoid extended striking exchanges and control the fight. Francis will attempt to knock him out with his insane power punch.",
   },
   {
     id: 2,
     title: "Khabib Nurmagomedov vs Tony Ferguson",
-    videoSrc: "/videos/fight2.mp4",
+    videoSrc: "https://www.youtube.com/embed/8nOsnnYAZYs",
     prediction:
       "Khabib wins in Round 2 with a submission (obviously), using takedowns and top pressure to neutralize Ferguson. Ferguson may land some kicks that knock Khabib down.",
   },
   {
     id: 3,
     title: "Amanda Nunes vs Cris Cyborg",
-    videoSrc: "/videos/fight3.mp4",
+    videoSrc: "https://www.youtube.com/embed/-LxpkCJcvpo",
     prediction:
       "Amanda Nunes wins in Round 3, using her striking, distance control, and late-round finishing ability. Cris will leverage her BJJ and Judo background to exhaust Amanda in an attempt to secure a later-round victory.",
   },
@@ -131,15 +131,12 @@ export default function Index() {
                 key={video.id}
                 className="overflow-hidden rounded-2xl border border-white/10 bg-black/55 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur-sm"
               >
-                <video
-                  controls
-                  preload="metadata"
-                  playsInline
+                <iframe
+                  src={video.videoSrc}
                   className="w-full aspect-video bg-black"
-                >
-                  <source src={video.videoSrc} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
 
                 <div className="p-5">
                   <h3 className="text-xl font-bold uppercase tracking-wide">

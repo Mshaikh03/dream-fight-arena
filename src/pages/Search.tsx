@@ -6,7 +6,7 @@ const allFights = [
     id: 1,
     title: "Jon Jones vs Francis Ngannou",
     status: "available",
-    videoSrc: "/videos/fight1.mp4",
+    videoSrc: "https://www.youtube.com/embed/cd5j-xXXv50",
     prediction:
       "Jon Jones wins by decision, using his wrestling advantage to avoid extended striking exchanges and control the fight.",
   },
@@ -14,7 +14,7 @@ const allFights = [
     id: 2,
     title: "Khabib Nurmagomedov vs Tony Ferguson",
     status: "available",
-    videoSrc: "/videos/fight2.mp4",
+    videoSrc: "https://www.youtube.com/embed/8nOsnnYAZYs",
     prediction:
       "Khabib wins in Round 2 with a submission, using takedowns and top pressure to neutralize Ferguson.",
   },
@@ -22,7 +22,7 @@ const allFights = [
     id: 3,
     title: "Amanda Nunes vs Cris Cyborg",
     status: "available",
-    videoSrc: "/videos/fight3.mp4",
+    videoSrc: "https://www.youtube.com/embed/-LxpkCJcvpo",
     prediction:
       "Amanda Nunes wins in Round 3, using her striking, distance control, and late-round finishing ability.",
   },
@@ -104,15 +104,12 @@ export default function Search() {
                 className="overflow-hidden rounded-2xl border border-white/10 bg-black/55 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur-sm"
               >
                 {fight.status === "available" && fight.videoSrc ? (
-                  <video
-                    controls
-                    preload="metadata"
-                    playsInline
+                  <iframe
+                    src={fight.videoSrc}
                     className="w-full aspect-video bg-black"
-                  >
-                    <source src={fight.videoSrc} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 ) : (
                   <div className="relative w-full aspect-video bg-[linear-gradient(to_bottom,_#120000_0%,_#2a0000_35%,_#1a1a1a_100%)] flex items-center justify-center">
                     <div className="absolute inset-0 bg-black/30" />
